@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.1
+
+- [release-1](2026-09-23-0.4.1-release-1.md) — Spostare la collection Postman di MyTask dentro apps/mytask/ e smettere di tracciarla
+
 ## 0.4.0
 
 - [release-1](2026-09-23-0.4.0-release-1.md) — Scenario seed-and-verify, runner generico per scenari, e packaging
