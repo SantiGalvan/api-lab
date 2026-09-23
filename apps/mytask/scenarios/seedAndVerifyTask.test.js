@@ -6,33 +6,29 @@ import { run } from './seedAndVerifyTask.js';
 
 const BASE_URL = 'https://mytask.example.com/api/';
 
-function urlPath(url) {
-  return new URL(url).pathname.replace(/^\/api\//, '');
-}
+const urlPath = (url) => new URL(url).pathname.replace(/^\/api\//, '');
 
-function makeTaskStore() {
+const makeTaskStore = () => {
   let nextId = 1;
   const tasks = new Map();
   return {
-    create(fields) {
+    create: (fields) => {
       const id = nextId++;
       const task = { id, ...fields };
       tasks.set(id, task);
       return task;
     },
-    get(id) {
-      return tasks.get(Number(id));
-    },
-    update(id, fields) {
+    get: (id) => tasks.get(Number(id)),
+    update: (id, fields) => {
       const task = { ...tasks.get(Number(id)), ...fields, id: Number(id) };
       tasks.set(Number(id), task);
       return task;
     },
-    delete(id) {
+    delete: (id) => {
       tasks.delete(Number(id));
     },
   };
-}
+};
 
 describe('mytask seedAndVerifyTask scenario', () => {
   const originalEnv = { ...process.env };

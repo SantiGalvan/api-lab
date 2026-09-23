@@ -7,7 +7,7 @@ export class HTTPError extends Error {
   }
 }
 
-async function parseBody(response) {
+const parseBody = async (response) => {
   const text = await response.text();
   if (!text) return undefined;
   try {
@@ -15,9 +15,9 @@ async function parseBody(response) {
   } catch {
     return text;
   }
-}
+};
 
-function applyToken(url, headers, token) {
+const applyToken = (url, headers, token) => {
   if (!token) return url;
 
   if (token.mode === 'query') {
@@ -31,9 +31,9 @@ function applyToken(url, headers, token) {
   }
 
   return url;
-}
+};
 
-async function request(method, url, { token, body: payload } = {}) {
+const request = async (method, url, { token, body: payload } = {}) => {
   const headers = {};
   const finalUrl = applyToken(url, headers, token);
 
@@ -53,24 +53,14 @@ async function request(method, url, { token, body: payload } = {}) {
   }
 
   return { status: response.status, body, headers: response.headers };
-}
+};
 
-export function get(url, opts) {
-  return request('GET', url, opts);
-}
+export const get = (url, opts) => request('GET', url, opts);
 
-export function post(url, body, opts) {
-  return request('POST', url, { ...opts, body });
-}
+export const post = (url, body, opts) => request('POST', url, { ...opts, body });
 
-export function patch(url, body, opts) {
-  return request('PATCH', url, { ...opts, body });
-}
+export const patch = (url, body, opts) => request('PATCH', url, { ...opts, body });
 
-export function put(url, body, opts) {
-  return request('PUT', url, { ...opts, body });
-}
+export const put = (url, body, opts) => request('PUT', url, { ...opts, body });
 
-export function del(url, opts) {
-  return request('DELETE', url, opts);
-}
+export const del = (url, opts) => request('DELETE', url, opts);

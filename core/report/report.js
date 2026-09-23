@@ -1,7 +1,7 @@
 import { mkdir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 
-export async function saveReport(name, data, { dir = 'runs' } = {}) {
+export const saveReport = async (name, data, { dir = 'runs' } = {}) => {
   await mkdir(dir, { recursive: true });
 
   const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
@@ -10,4 +10,4 @@ export async function saveReport(name, data, { dir = 'runs' } = {}) {
   await writeFile(filepath, JSON.stringify(data, null, 2));
 
   return filepath;
-}
+};

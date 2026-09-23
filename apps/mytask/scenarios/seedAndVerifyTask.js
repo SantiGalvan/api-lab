@@ -11,27 +11,23 @@ const CONCURRENCY = 8;
  * `task` key (mirroring the `{ task: ... }` request envelope) or return it
  * bare; normalize to the bare shape so the rest of the scenario doesn't care.
  */
-function unwrapTask(response) {
-  return response?.task ?? response;
-}
+const unwrapTask = (response) => response?.task ?? response;
 
-function settledCounts(results) {
+const settledCounts = (results) => {
   const ok = results.filter((result) => result.status === 'fulfilled').length;
   return { ok, failed: results.length - ok, total: results.length };
-}
+};
 
-function buildSeedPayload(env, index) {
-  return {
-    name: `seed-and-verify-task #${index + 1}`,
-    description: 'Created by the seedAndVerifyTask scenario',
-    progress: 0,
-    project_id: env.fixtureProjectId,
-    ...(env.fixtureUserId ? { user_id: env.fixtureUserId } : {}),
-    ...(env.fixtureTaskTypeId ? { task_type_id: env.fixtureTaskTypeId } : {}),
-  };
-}
+const buildSeedPayload = (env, index) => ({
+  name: `seed-and-verify-task #${index + 1}`,
+  description: 'Created by the seedAndVerifyTask scenario',
+  progress: 0,
+  project_id: env.fixtureProjectId,
+  ...(env.fixtureUserId ? { user_id: env.fixtureUserId } : {}),
+  ...(env.fixtureTaskTypeId ? { task_type_id: env.fixtureTaskTypeId } : {}),
+});
 
-async function runStatefulUpdateCheck(api, task) {
+const runStatefulUpdateCheck = async (api, task) => {
   if (!task) {
     return { ok: false, reason: 'no Task was created to run the stateful update check on' };
   }
@@ -44,7 +40,7 @@ async function runStatefulUpdateCheck(api, task) {
   } catch (error) {
     return { ok: false, taskId: task.id, error: error.message };
   }
-}
+};
 
 /**
  * Seeds 20 Tasks concurrently under a fixture Project, reads them all back
@@ -54,7 +50,7 @@ async function runStatefulUpdateCheck(api, task) {
  * @param {{ envName?: string, projectId?: string, reportDir?: string }} [options]
  * @returns {Promise<{ report: object, filepath: string }>}
  */
-export async function run({ envName = 'production', projectId, reportDir } = {}) {
+export const run = async ({ envName = 'production', projectId, reportDir } = {}) => {
   const baseEnv = getEnvironment(envName);
   const fixtureProjectId = projectId ?? baseEnv.fixtureProjectId;
   if (!fixtureProjectId) {
@@ -104,6 +100,6 @@ export async function run({ envName = 'production', projectId, reportDir } = {})
   const filepath = await saveReport('mytask-seed-and-verify-task', report, reportDir ? { dir: reportDir } : undefined);
 
   return { report, filepath };
-}
+};
 
 export default run;

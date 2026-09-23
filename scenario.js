@@ -14,13 +14,13 @@ try {
   if (error.code !== 'ENOENT') throw error;
 }
 
-function resolveScenarioUrl() {
+const resolveScenarioUrl = () => {
   const perAppUrl = new URL(`./apps/${appName}/scenarios/${scenarioName}.js`, import.meta.url);
   if (existsSync(fileURLToPath(perAppUrl))) {
     return perAppUrl;
   }
   return new URL(`./scenarios/${scenarioName}.js`, import.meta.url);
-}
+};
 
 const { default: run } = await import(resolveScenarioUrl());
 const result = await run();

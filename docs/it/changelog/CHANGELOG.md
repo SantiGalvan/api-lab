@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.2
+
+- [release-1](2026-09-23-0.4.2-release-1.md) — Convertire le funzioni dichiarate in arrow function in tutto il codebase
+
 ## 0.4.1
 
 - [release-1](2026-09-23-0.4.1-release-1.md) — Spostare la collection Postman di MyTask dentro apps/mytask/ e smettere di tracciarla

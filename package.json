@@ -1,6 +1,6 @@
 {
   "name": "api-lab",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "private": true,
   "type": "module",
   "description": "A Node/ESM lab for exploring, debugging, and orchestrating API calls to external services.",

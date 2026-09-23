@@ -1,14 +1,12 @@
 import { HTTPError } from '../client/client.js';
 
-export function createLoginAuthStrategy({ login, mode, param, header, scheme }) {
+export const createLoginAuthStrategy = ({ login, mode, param, header, scheme }) => {
   let cachedValue = null;
 
-  function toToken(value) {
-    return { mode, value, param, header, scheme };
-  }
+  const toToken = (value) => ({ mode, value, param, header, scheme });
 
   return {
-    async request(requestFn) {
+    request: async (requestFn) => {
       if (cachedValue === null) {
         cachedValue = await login();
       }
@@ -26,18 +24,18 @@ export function createLoginAuthStrategy({ login, mode, param, header, scheme }) 
       return retryResult.body;
     },
 
-    async refresh() {
+    refresh: async () => {
       cachedValue = await login();
       return cachedValue;
     },
   };
-}
+};
 
-export function createStaticAuthStrategy({ mode, value, param, header, scheme }) {
+export const createStaticAuthStrategy = ({ mode, value, param, header, scheme }) => {
   const token = { mode, value, param, header, scheme };
 
   return {
-    async request(requestFn) {
+    request: async (requestFn) => {
       const result = await requestFn(token);
       if (result.status === 401) {
         throw new HTTPError(result.status, result.body);
@@ -45,4 +43,4 @@ export function createStaticAuthStrategy({ mode, value, param, header, scheme })
       return result.body;
     },
   };
-}
+};

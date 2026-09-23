@@ -39,7 +39,7 @@ const environments = {
  * @param {string} name - environment name, e.g. "production".
  * @returns {{ baseUrl: string, token: { mode: string, param: string, value: string }, loginCredentials: { email: string, password: string }, fixtureProjectId: string, fixtureUserId: string, fixtureTaskTypeId: string }}
  */
-export function getEnvironment(name) {
+export const getEnvironment = (name) => {
   const env = environments[name];
   if (!env) {
     throw new Error(`mytask: unknown environment "${name}"`);
@@ -52,6 +52,6 @@ export function getEnvironment(name) {
     fixtureUserId: env.fixtureUserId,
     fixtureTaskTypeId: env.fixtureTaskTypeId,
   };
-}
+};
 
 export default getEnvironment;
