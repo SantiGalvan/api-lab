@@ -9,6 +9,9 @@ describe('mytask config', () => {
     process.env.MYTASK_M2M_TOKEN = 'm2m-secret';
     process.env.MYTASK_LOGIN_EMAIL = 'admin@example.com';
     process.env.MYTASK_LOGIN_PASSWORD = 'admin-secret';
+    process.env.MYTASK_FIXTURE_PROJECT_ID = '1';
+    process.env.MYTASK_FIXTURE_USER_ID = '309';
+    process.env.MYTASK_FIXTURE_TASK_TYPE_ID = '2';
   });
 
   afterEach(() => {
@@ -22,6 +25,9 @@ describe('mytask config', () => {
       baseUrl: 'https://mytask.example.com/api/',
       token: { mode: 'query', param: 'token', value: 'm2m-secret' },
       loginCredentials: { email: 'admin@example.com', password: 'admin-secret' },
+      fixtureProjectId: '1',
+      fixtureUserId: '309',
+      fixtureTaskTypeId: '2',
     });
   });
 

@@ -1,12 +1,13 @@
 {
   "name": "api-lab",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
   "type": "module",
   "description": "A Node/ESM lab for exploring, debugging, and orchestrating API calls to external services.",
   "scripts": {
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "seed": "node scenario.js mytask seedAndVerifyTask"
   },
   "license": "ISC",
   "dependencies": {

@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.0
+
+- [release-1](2026-09-23-0.4.0-release-1.md) — Scenario seed-and-verify, runner generico per scenari, e packaging
+
 ## 0.3.0
 
 - [release-1](2026-09-23-0.3.0-release-1.md) — MyTask: modalità login e switch di authMode per run

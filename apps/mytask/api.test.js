@@ -27,7 +27,10 @@ describe('makeMytaskApi', () => {
     expect(result).toEqual({ id: 1, title: 'Fix bug' });
     expect(fetch).toHaveBeenCalledWith(
       'https://mytask.example.com/api/tasks?token=m2m-secret',
-      expect.objectContaining({ method: 'POST', body: JSON.stringify({ title: 'Fix bug' }) }),
+      expect.objectContaining({
+        method: 'POST',
+        body: JSON.stringify({ task: { title: 'Fix bug' } }),
+      }),
     );
   });
 
@@ -55,7 +58,10 @@ describe('makeMytaskApi', () => {
     expect(result).toEqual({ id: 1, title: 'Updated' });
     expect(fetch).toHaveBeenCalledWith(
       'https://mytask.example.com/api/tasks/1?token=m2m-secret',
-      expect.objectContaining({ method: 'PUT', body: JSON.stringify({ title: 'Updated' }) }),
+      expect.objectContaining({
+        method: 'PUT',
+        body: JSON.stringify({ task: { title: 'Updated' } }),
+      }),
     );
   });
 

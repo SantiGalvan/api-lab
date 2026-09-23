@@ -67,12 +67,13 @@ export function makeMytaskApi(env, { authMode = 'm2m' } = {}) {
   }
 
   /**
-   * Creates a new Task.
+   * Creates a new Task. MyTask expects Task fields nested under a `task` key
+   * (Rails-style params wrapping), not as the bare body.
    * @param {object} payload - Task fields as expected by MyTask.
    * @returns {Promise<object>} the created Task.
    */
   function createTask(payload) {
-    return strategy.request((token) => post(buildUrl(env.baseUrl, 'tasks'), payload, { token }));
+    return strategy.request((token) => post(buildUrl(env.baseUrl, 'tasks'), { task: payload }, { token }));
   }
 
   /**
@@ -85,13 +86,14 @@ export function makeMytaskApi(env, { authMode = 'm2m' } = {}) {
   }
 
   /**
-   * Replaces a Task by id (MyTask's Task Update is a full PUT, not a partial patch).
+   * Replaces a Task by id (MyTask's Task Update is a full PUT, not a partial
+   * patch), again nesting the payload under a `task` key like createTask.
    * @param {string|number} id - Task id.
    * @param {object} payload - full Task representation to send.
    * @returns {Promise<object>} the updated Task.
    */
   function updateTask(id, payload) {
-    return strategy.request((token) => put(buildUrl(env.baseUrl, `tasks/${id}`), payload, { token }));
+    return strategy.request((token) => put(buildUrl(env.baseUrl, `tasks/${id}`), { task: payload }, { token }));
   }
 
   /**
