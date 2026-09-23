@@ -52,7 +52,7 @@ async function request(method, url, { token, body: payload } = {}) {
     throw new HTTPError(response.status, body);
   }
 
-  return { status: response.status, body };
+  return { status: response.status, body, headers: response.headers };
 }
 
 export function get(url, opts) {

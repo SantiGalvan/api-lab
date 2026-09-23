@@ -7,6 +7,8 @@ describe('mytask config', () => {
   beforeEach(() => {
     process.env.MYTASK_URI = 'https://mytask.example.com/api/';
     process.env.MYTASK_M2M_TOKEN = 'm2m-secret';
+    process.env.MYTASK_LOGIN_EMAIL = 'admin@example.com';
+    process.env.MYTASK_LOGIN_PASSWORD = 'admin-secret';
   });
 
   afterEach(() => {
@@ -19,6 +21,7 @@ describe('mytask config', () => {
     expect(env).toEqual({
       baseUrl: 'https://mytask.example.com/api/',
       token: { mode: 'query', param: 'token', value: 'm2m-secret' },
+      loginCredentials: { email: 'admin@example.com', password: 'admin-secret' },
     });
   });
 

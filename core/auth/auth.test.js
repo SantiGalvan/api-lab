@@ -103,6 +103,42 @@ describe('login auth strategy', () => {
     );
   });
 
+  it('refresh() logs in immediately and the new token is used by the next request', async () => {
+    fetch.mockResolvedValue(new Response(JSON.stringify({ id: 1 }), { status: 200 }));
+    const login = vi.fn().mockResolvedValueOnce('first-token').mockResolvedValueOnce('second-token');
+    const strategy = createLoginAuthStrategy({ login, mode: 'header' });
+
+    await strategy.refresh();
+    await strategy.request((token) => get('https://example.com/users/1', { token }));
+
+    expect(login).toHaveBeenCalledTimes(1);
+    expect(fetch).toHaveBeenCalledWith(
+      'https://example.com/users/1',
+      expect.objectContaining({
+        headers: expect.objectContaining({ Authorization: 'Bearer first-token' }),
+      }),
+    );
+  });
+
+  it('refresh() replaces an already-cached token instead of reusing it', async () => {
+    fetch.mockImplementation(async () => new Response(JSON.stringify({ id: 1 }), { status: 200 }));
+    const login = vi.fn().mockResolvedValueOnce('first-token').mockResolvedValueOnce('second-token');
+    const strategy = createLoginAuthStrategy({ login, mode: 'header' });
+
+    await strategy.request((token) => get('https://example.com/users/1', { token }));
+    await strategy.refresh();
+    await strategy.request((token) => get('https://example.com/users/1', { token }));
+
+    expect(login).toHaveBeenCalledTimes(2);
+    expect(fetch).toHaveBeenNthCalledWith(
+      2,
+      'https://example.com/users/1',
+      expect.objectContaining({
+        headers: expect.objectContaining({ Authorization: 'Bearer second-token' }),
+      }),
+    );
+  });
+
   it('propagates an HTTPError if the retried request also gets a 401', async () => {
     fetch.mockImplementation(
       async () => new Response(JSON.stringify({ message: 'still expired' }), { status: 401 }),

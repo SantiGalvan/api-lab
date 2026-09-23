@@ -25,6 +25,11 @@ export function createLoginAuthStrategy({ login, mode, param, header, scheme }) 
       }
       return retryResult.body;
     },
+
+    async refresh() {
+      cachedValue = await login();
+      return cachedValue;
+    },
   };
 }
 

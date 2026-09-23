@@ -17,11 +17,21 @@ describe('client.get', () => {
 
     const result = await get('https://example.com/users/1');
 
-    expect(result).toEqual({ status: 200, body: { id: 1 } });
+    expect(result).toEqual({ status: 200, body: { id: 1 }, headers: expect.any(Headers) });
     expect(fetch).toHaveBeenCalledWith(
       'https://example.com/users/1',
       expect.objectContaining({ method: 'GET' }),
     );
+  });
+
+  it('exposes response headers so callers can read custom ones', async () => {
+    fetch.mockResolvedValue(
+      new Response(JSON.stringify({}), { status: 200, headers: { token: 'session-abc' } }),
+    );
+
+    const result = await get('https://example.com/users/1');
+
+    expect(result.headers.get('token')).toBe('session-abc');
   });
 
   it('throws HTTPError with status and body on a non-2xx response other than 401', async () => {
@@ -42,7 +52,11 @@ describe('client.get', () => {
 
     const result = await get('https://example.com/users/1');
 
-    expect(result).toEqual({ status: 401, body: { message: 'unauthorized' } });
+    expect(result).toEqual({
+      status: 401,
+      body: { message: 'unauthorized' },
+      headers: expect.any(Headers),
+    });
   });
 
   it('attaches the token as a query string param when mode is "query"', async () => {
@@ -89,7 +103,7 @@ describe('client write verbs (post/patch/put/del)', () => {
 
     const result = await post('https://example.com/users', { name: 'Ada' });
 
-    expect(result).toEqual({ status: 201, body: { id: 2 } });
+    expect(result).toEqual({ status: 201, body: { id: 2 }, headers: expect.any(Headers) });
     expect(fetch).toHaveBeenCalledWith(
       'https://example.com/users',
       expect.objectContaining({
@@ -121,7 +135,7 @@ describe('client write verbs (post/patch/put/del)', () => {
 
     const result = await del('https://example.com/users/1');
 
-    expect(result).toEqual({ status: 204, body: undefined });
+    expect(result).toEqual({ status: 204, body: undefined, headers: expect.any(Headers) });
     expect(fetch).toHaveBeenCalledWith(
       'https://example.com/users/1',
       expect.objectContaining({ method: 'DELETE' }),
