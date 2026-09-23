@@ -1,0 +1,18 @@
+{
+  "name": "api-lab",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A Node/ESM lab for exploring, debugging, and orchestrating API calls to external services.",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "p-limit": "^7.3.3"
+  },
+  "devDependencies": {
+    "vitest": "^4.1.11"
+  }
+}
