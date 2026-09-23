@@ -4,10 +4,8 @@ Queste regole governano come Claude Code deve lavorare su questa repository. Non
 
 ## 1. Branch
 
-- **`main`**: congelato. Non si lavora mai qui, non riceve mai merge se non manualmente dall'utente.
-- **`release/1`**: il branch di lavoro stabile. Tutto il lavoro avviene direttamente qui — nessun branch `feature/`/`epic/` per singola lavorazione. I commit atomici vanno direttamente su `release/1`.
-  - Quando una porzione di lavoro significativa è pronta, Claude Code apre una PR da `release/1` verso `main` e si ferma lì.
-  - Il merge di una PR **dentro `main`** lo esegue **sempre e solo l'utente**, manualmente.
+- **`main`**: permanentemente protetto e congelato. Non riceve mai merge, nemmeno manualmente dall'utente, mai. Non si lavora mai qui, non si apre mai una PR verso questo branch.
+- **`release/1`**: il branch di default di fatto, ed il branch di lavoro stabile. Tutto il lavoro avviene direttamente qui — nessun branch `feature/`/`epic/` per singola lavorazione, nessuna PR verso `main`. I commit atomici vanno direttamente su `release/1`.
 
 ## 2. Processo per ogni nuova lavorazione
 
@@ -24,7 +22,7 @@ Intervista approfondita sull'idea (chiama `grilling` + `domain-modeling`), aggio
 - **Sì** → `/to-spec` (tiene lo spec in memoria, non lo pubblica come issue GitHub) → `/to-tickets` (lo spezza in sotto-task indipendenti, verticalmente sliced, anch'essi tenuti in memoria, non come issue GitHub). Poi: **una nuova sessione per ogni sotto-task**, con `/implement` passandogli lo spec principale + il singolo sotto-task — tutto committato direttamente su `release/1`.
 - **No** → `/implement` nella stessa finestra di contesto, direttamente su `release/1`.
 
-**Passo 4 — Flusso Git** (vedi punto 1): lavoro diretto su `release/1` → commit atomici → quando pronto, PR verso `main` → stop, nessun merge autonomo verso `main`.
+**Passo 4 — Flusso Git** (vedi punto 1): lavoro diretto su `release/1` → commit atomici → push su `release/1`. Non si apre mai una PR verso `main` — `main` è permanentemente congelato e fuori scope per questo flusso.
 
 **Passo 4.5 — Changelog** (vedi punto 5) — **obbligatorio prima di ogni push**:
 1. Crea `docs/it/changelog/AAAA-MM-GG-X.Y.Z-nome-branch.md` e `docs/en/changelog/YYYY-MM-DD-X.Y.Z-branch-name.md` con il template del punto 5.

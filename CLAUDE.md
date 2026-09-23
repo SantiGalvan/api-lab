@@ -4,10 +4,8 @@ These rules govern how Claude Code must work in this repository. They are not su
 
 ## 1. Branches
 
-- **`main`**: frozen. Never work here, it never receives merges except manually by the user.
-- **`release/1`**: the standing working branch. All work happens directly here — no per-task `feature/`/`epic/` branches. Atomic commits go straight onto `release/1`.
-  - When a meaningful chunk of work is ready, Claude Code opens a PR from `release/1` toward `main` and stops there.
-  - Merging a PR **into `main`** is **always and only done by the user**, manually.
+- **`main`**: permanently protected and frozen. It never receives merges, not even manually by the user, not ever. Never work here, never open a PR toward it.
+- **`release/1`**: the de facto default branch, and the standing working branch. All work happens directly here — no per-task `feature/`/`epic/` branches, no PRs toward `main`. Atomic commits go straight onto `release/1`.
 
 ## 2. Process for every new task
 
@@ -24,7 +22,7 @@ Thorough interview on the idea (calls `grilling` + `domain-modeling`), updating 
 - **Yes** → `/to-spec` (keeps the spec in memory, not published as a GitHub issue) → `/to-tickets` (splits it into independent, vertically-sliced sub-tasks, also kept in memory, not as GitHub issues). Then: **a new session for each sub-task**, with `/implement` given the main spec + the single sub-task — all still committed directly onto `release/1`.
 - **No** → `/implement` in the same context window, directly onto `release/1`.
 
-**Step 4 — Git flow** (see point 1): work directly on `release/1` → atomic commits → when ready, PR to `main` → stop, no autonomous merge into `main`.
+**Step 4 — Git flow** (see point 1): work directly on `release/1` → atomic commits → push to `release/1`. No PR toward `main` is ever opened — `main` is permanently frozen and out of scope for this workflow.
 
 **Step 4.5 — Changelog** (see point 6) — **mandatory before every push**:
 1. Create `docs/it/changelog/AAAA-MM-GG-X.Y.Z-nome-branch.md` and `docs/en/changelog/YYYY-MM-DD-X.Y.Z-branch-name.md` using the template in point 6.

@@ -10,7 +10,7 @@ Tutte le regole che governano come Claude Code opera in questa repository — mo
 
 Un riepilogo:
 
-- **Branch**: `main` è congelato e protetto — nessun lavoro diretto, i merge li esegue sempre e solo l'utente manualmente. Tutto il lavoro avviene sul branch stabile `release/1`; le PR vanno da `release/1` verso `main` e vengono mergiate manualmente.
+- **Branch**: `main` è permanentemente protetto e congelato — nessun lavoro diretto, nessun merge, mai, nemmeno manualmente. `release/1` è il branch di default di fatto ed il branch di lavoro stabile; non si aprono PR verso `main`.
 - **Processo delle lavorazioni**: ogni nuova lavorazione, inclusi i fix piccoli, segue un flusso fisso — `/grill-with-docs` per la raccolta dei requisiti, un ciclo opzionale `/prototype` → `/handoff` per tutto ciò che va verificato in pratica, `/to-spec`/`/to-tickets` per le lavorazioni multi-sessione (tenute in memoria, non pubblicate come issue GitHub), implementazione con `/implement` e `/tdd` per il red-green-refactor. Vedi [CLAUDE.md](../../../CLAUDE.md) §2 per il flusso completo.
 - **Test**: [Vitest](https://vitest.dev), un file `.test.ts` per ogni file sorgente con logica, eseguiti con `npm run test` / `npm run test:watch`.
 - **Organizzazione dei file**: una cartella per modulo (`Modulo.ts`, `Modulo.test.ts`, `index.ts`), una responsabilità per file.
